@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pypika = "*"
+faker = "*"
+
+[dev-packages]
+mypy = "*"
+ruff = "*"
+black = "*"
+isort = "*"
+
+[requires]
+python_version = "3.11"

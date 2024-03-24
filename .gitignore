@@ -1,0 +1,6 @@
+.secrets*
+!.secrets.example
+*.env*
+!*.env.example
+
+docs/diagrams/out
