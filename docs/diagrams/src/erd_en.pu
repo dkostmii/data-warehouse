@@ -1,0 +1,58 @@
+@startuml erd_en
+
+skinparam linetype ortho
+
+entity Candidate {
+  candidate_id
+  first_name
+  last_name
+  phone_number
+  email
+  birth_date
+  location_id
+  passport_code
+  driver_license_code
+  vacancy_id
+  employment_status
+}
+
+entity Vacancy {
+  vacancy_id
+  name
+  company_id
+  salary
+  vacancy_category_id
+  additional_info
+}
+
+entity Company {
+  company_id
+  name
+  phone_number
+  location_id
+  production_branch_id
+}
+
+entity Vacancy_Category {
+  vacancy_category_id
+  name
+}
+
+entity Production_Branch {
+  production_branch_id
+  name
+}
+
+entity Location {
+  location_id
+  name
+}
+
+Candidate }o--o| Vacancy : Applies
+Candidate }o--|| Location
+Vacancy }o--|| Company : Belongs to
+Vacancy }o--|| Vacancy_Category
+Company }o--|| Production_Branch
+Company }o--|| Location
+
+@enduml
