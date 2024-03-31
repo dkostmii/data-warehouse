@@ -1,0 +1,84 @@
+- name: Водій бусу
+  vacancy_category: Обладнання електромереж
+  company:
+    name: NOVBUD
+    production_branch: Будівництво
+    location: Київ
+- name: Penetration tester (Kali Linux)
+  vacancy_category: Пенетраційне тестування
+  company:
+    name: Sigma Software
+    production_branch: IT
+    location: Львів
+- name: Архітектор баз даних
+  vacancy_category: Бази даних
+  company:
+    name: EPAM
+    production_branch: IT
+    location: Львів
+- name: Архітектор нейронних мереж
+  vacancy_category: Штучний інтелект
+  company:
+    name: DataArt
+    production_branch: IT
+    location: Дніпро
+- name: Спеціаліст з безпеки інформаційних систем
+  vacancy_category: Кібербезпека
+  company:
+    name: Ajax Systems
+    production_branch: IT
+    location: Київ
+- name: Customer support specialist
+  vacancy_category: Служба підтримки користувачів
+  company:
+    name: ZONE3000
+    production_branch: IT
+    location: Львів
+- name: Penetration tester
+  vacancy_category: Пенетраційне тестування
+  company:
+    name: SoftServe
+    production_branch: IT
+    location: Вінниця
+- name: Спеціаліст з укладання фундаменту
+  vacancy_category: Укладання фундаменту
+  company:
+    name: Синергія
+    production_branch: Будівництво
+    location: Житомир
+- name: Сантехнік
+  vacancy_category: Обладнання водопровідних систем
+  company:
+    name: Інтеграл-Буд
+    production_branch: Будівництво
+    location: Луцьк
+- name: Спеціаліст зі встановлення вікон та дверей
+  vacancy_category: Обробка фасадів
+  company:
+    name: РІЕЛ
+    production_branch: Будівництво
+    location: Луцьк
+- name: Водій бетоновозу
+  vacancy_category: Укладання фундаменту
+  company:
+    name: Синергія
+    production_branch: Будівництво
+    location: Черкаси
+- name: Спеціаліст по каналізаційним мережам
+  vacancy_category: Обладнання водопровідних систем
+  company:
+    name: NOVBUD
+    production_branch: Будівництво
+    location: Одеса
+- name: Спеціаліст зі встановлення вікон та дверей
+  vacancy_category: Обробка фасадів
+  company:
+    name: Синергія
+    production_branch: Будівництво
+    location: Івано-Франківськ
+- name: Спеціаліст з укладання фундаменту
+  vacancy_category: Укладання фундаменту
+  company:
+    name: NOVBUD
+    production_branch: Будівництво
+    location: Полтава

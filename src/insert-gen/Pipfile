@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 pypika = "*"
 faker = "*"
+translitua = "*"
+pyyaml = "*"
 
 [dev-packages]
 mypy = "*"
