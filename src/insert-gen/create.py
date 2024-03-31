@@ -67,7 +67,8 @@ statements = [
             Column("location_id", "UUID", nullable=False),
             Column("passport_code", "VARCHAR(9)", nullable=False),
             Column("driver_license_code", "VARCHAR(9)", nullable=False),
-            Column("vacancy_id", "UUID", nullable=False)
+            Column("vacancy_id", "UUID", nullable=False),
+            Column("employment_status", "VARCHAR(15)", nullable=False)
         )
         .primary_key("candidate_id")
         .foreign_key(["vacancy_id"], "Vacancy", ["vacancy_id"])
