@@ -6,7 +6,7 @@ entity Candidate {
   candidate_id
   first_name
   last_name
-  phone_number
+  phone_number_id
   email
   birth_date
   location_id
@@ -28,7 +28,7 @@ entity Vacancy {
 entity Company {
   company_id
   name
-  phone_number
+  phone_number_id
   location_id
   production_branch_id
 }
@@ -48,11 +48,18 @@ entity Location {
   name
 }
 
+entity Phone_number {
+  phone_number_id
+  phone_number
+}
+
 Candidate }o--o| Vacancy : Applies
 Candidate }o--|| Location
+Candidate }o--|| Phone_number
 Vacancy }o--|| Company : Belongs to
 Vacancy }o--|| Vacancy_Category
 Company }o--|| Production_Branch
 Company }o--|| Location
+Company }o--|| Phone_number
 
 @enduml
