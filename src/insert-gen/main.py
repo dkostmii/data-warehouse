@@ -15,7 +15,7 @@ def main():
     if create_sql_is_empty or force and not create_sql_is_empty:
         with open(create_sql_file, mode='w') as f:
             print(f"Writing to {create_sql_file}...")
-            f.writelines(statements)
+            f.write("\n".join(statements))
     else:
         print(f"File {create_sql_file} is not empty and -f flag is not provided. Skipping...")
 
