@@ -1,5 +1,6 @@
-from translitua import translitua
 from random import choice, randint, random
+
+from translitua import translitua
 
 alphabet = "абвгґдеєжзиіїйклмнопрстуфхцчшщьюя"
 

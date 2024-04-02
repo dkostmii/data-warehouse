@@ -1,5 +1,6 @@
 import models
-from helpers.unique_generator import UniqueGenerator, Generator
+from helpers.unique_generator import Generator, UniqueGenerator
+
 
 class Context:
     def __init__(self):

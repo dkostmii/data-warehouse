@@ -1,13 +1,15 @@
-from typing import TypeVar, Generic, Protocol
+from typing import Generic, Protocol, TypeVar
 
-T = TypeVar("T")
+T = TypeVar("T", covariant=True)
+
 
 class UniqueGeneratorException(Exception):
     pass
 
+
 class Generator(Generic[T], Protocol):
-    def get(self, *args, **kwargs) -> T:
-        ...
+    def get(self, *args, **kwargs) -> T: ...
+
 
 class UniqueGenerator(Generic[T]):
     _history: list[T]
@@ -27,7 +29,9 @@ class UniqueGenerator(Generic[T]):
             result = self._gen.get(*args, **kwargs)
 
         if result in self._history:
-            raise UniqueGeneratorException(f"Cannot generate unique value. Reached unique_max_iter={unique_iter}. Current value: {result}.")
+            raise UniqueGeneratorException(
+                f"Cannot generate unique value. Reached unique_max_iter={unique_iter}. Current value: {result}."
+            )
 
         self._history.append(result)
         return result

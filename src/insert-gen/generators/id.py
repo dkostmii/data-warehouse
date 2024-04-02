@@ -1,4 +1,5 @@
-from uuid import uuid4, UUID
+from uuid import UUID, uuid4
+
 
 def get_random_uuid() -> UUID:
     return uuid4()

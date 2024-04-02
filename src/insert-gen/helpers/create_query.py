@@ -1,8 +1,9 @@
-from typing import List, Union, Any
-from pypika.queries import CreateQueryBuilder
-from pypika.utils import builder
+from typing import Any, List, Union
+
 from pypika import Column, Table
 from pypika.enums import ReferenceOption
+from pypika.queries import CreateQueryBuilder
+from pypika.utils import builder
 
 
 class ForeignKey:
@@ -25,8 +26,14 @@ class ForeignKey:
     def get_sql(self, **kwargs: Any) -> str:
         foreign_key_sql = "FOREIGN KEY ({columns}) REFERENCES {table_name} ({reference_columns})".format(
             columns=",".join(column.get_name_sql(**kwargs) for column in self.columns),
-            table_name=self.reference_table.get_sql(**kwargs) if isinstance(self.reference_table, Table) else self.reference_table,
-            reference_columns=",".join(column.get_name_sql(**kwargs) for column in self.reference_columns),
+            table_name=(
+                self.reference_table.get_sql(**kwargs)
+                if isinstance(self.reference_table, Table)
+                else self.reference_table
+            ),
+            reference_columns=",".join(
+                column.get_name_sql(**kwargs) for column in self.reference_columns
+            ),
         )
         if self.on_delete:
             foreign_key_sql += " ON DELETE " + self.on_delete.value
