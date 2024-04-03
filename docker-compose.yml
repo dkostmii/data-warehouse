@@ -18,11 +18,14 @@ services:
       - ./src/init/user-db.sql:/docker-entrypoint-initdb.d/01-init-user-db.sql
       - ./src/model/01-init-db.sh:/docker-entrypoint-initdb.d/02-model-init-db.sh
       - ./src/model/02-seed-db.sh:/docker-entrypoint-initdb.d/03-model-seed-db.sh
+      - ./src/insert-gen/generated:/etc/insert-gen
+      - ./.psqlrc:/etc/psqlrc
 
     environment:
       POSTGRES_PASSWORD_FILE: /run/secrets/db_password
       POSTGRES_USER_FILE: /run/secrets/db_user
       POSTGRES_DB_FILE: /run/secrets/db_dbname
+      PSQLRC: /etc/psqlrc
     secrets:
       - db_user
       - db_password
