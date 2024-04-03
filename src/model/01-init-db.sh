@@ -1,10 +1,10 @@
 #!/bin/bash
 
 psql -v ON_ERROR_STOP=1 --username "docker" --dbname "docker" <<-EOSQL
-	CREATE DATABASE hello_world;
+	CREATE DATABASE data_warehouse;
 EOSQL
 
-psql -v ON_ERROR_STOP=1 --username "docker" --dbname "hello_world" <<-EOSQL
+psql -v ON_ERROR_STOP=1 --username "docker" --dbname "data_warehouse" <<-EOSQL
 	CREATE TABLE hello_world
 	(
 		id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
