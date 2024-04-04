@@ -1,0 +1,129 @@
+@startuml erd_snowflake_ua
+
+skinparam linetype ortho
+
+entity Заявка_кандидата {
+  Код_заявки_кандидата
+  Ім'я
+  Прізвище
+  Номер_телефону
+  Електронна_пошта
+  Дата_народження
+  Номер_паспорта
+  Номер_водійського_посвідчення
+  Код_місцезнаходження_кандидата
+  Код_вакансії
+  Код_компанії
+  Код_місцезнаходження_компанії
+  Код_статус_працевлаштування
+  Дата_створення_заявки
+}
+
+entity Місцезнаходження {
+  Код_місцезнаходження
+  Назва
+}
+
+entity Вакансія {
+  Код_вакансії
+  Назва
+  Заробітня_плата
+  Додаткова_інформація
+  Код_категорії_вакансії
+}
+
+entity Категорія_вакансії {
+  Код_категорії_вакансії
+  Назва
+}
+
+entity Компанія {
+  Код_компанії
+  Назва
+  Номер_телефону
+  Код_виробничої_галузі
+}
+
+entity Виробнича_галузь {
+  Код_виробничної_галузі
+  Назва
+}
+
+entity Статус_працевлаштування {
+  Код_статусу_працевлаштування
+  Назва
+}
+
+Заявка_кандидата }o--|| Місцезнаходження
+Заявка_кандидата }o--|| Вакансія
+Заявка_кандидата }o--|| Компанія
+Заявка_кандидата }o--|| Статус_працевлаштування
+Вакансія }o--|| Категорія_вакансії
+Компанія }o--|| Виробнича_галузь
+
+@enduml
+
+@startuml erd_snowflake_en
+
+skinparam linetype ortho
+
+entity Candidate_application {
+  candidate_application_id
+  first_name
+  last_name
+  phone_number
+  email
+  birth_date
+  passport_code
+  driver_license_code
+  candidate_location_id
+  vacancy_id
+  company_id
+  company_location_id
+  employment_status_id
+  created_at
+}
+
+entity Location {
+  location_id
+  name
+}
+
+entity Vacancy {
+  vacancy_id
+  name
+  salary
+  additional_info
+  vacancy_category_id
+}
+
+entity Vacancy_category {
+  vacancy_category_id
+  name
+}
+
+entity Company {
+  company_id
+  name
+  phone_number
+  production_branch_id
+}
+
+entity Production_branch {
+  production_branch_id
+  name
+}
+
+entity Employment_status {
+  employment_status_id
+  name
+}
+
+Candidate_application }o--|| Location
+Candidate_application }o--|| Vacancy
+Candidate_application }o--|| Company
+Candidate_application }o--|| Employment_status
+Vacancy }o--|| Vacancy_category
+Company }o--|| Production_branch
+
+@enduml
