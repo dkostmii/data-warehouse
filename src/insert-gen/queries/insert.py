@@ -98,5 +98,3 @@ statements = [
         ]
     ),
 ]
-
-statements = list(map(lambda stmt: str(stmt) + ";", statements))
