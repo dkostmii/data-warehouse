@@ -1,4 +1,3 @@
-
 from dataclasses import dataclass
 from datetime import date, datetime
 from uuid import UUID

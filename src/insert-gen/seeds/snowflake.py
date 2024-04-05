@@ -42,8 +42,7 @@ def seed_root(context: Context):
         for es_name in employment_statuses:
             context.employment_statuses.append(
                 models.EmploymentStatus(
-                    employment_status_id=get_random_uuid(),
-                    name=es_name.strip()
+                    employment_status_id=get_random_uuid(), name=es_name.strip()
                 )
             )
 
@@ -59,11 +58,15 @@ def seed_root(context: Context):
         vacancies_data = yaml.load(f.read(), Loader=Loader)
 
     while len(context.candidate_applications) < CANDIDATE_COUNT:
-        candidate = seed_candidate_application(vacancies_data=vacancies_data, context=context)
+        candidate = seed_candidate_application(
+            vacancies_data=vacancies_data, context=context
+        )
         context.candidate_applications.append(candidate)
 
 
-def seed_candidate_application(vacancies_data: list[dict[str, Any]], context: Context) -> models.CandidateApplication:
+def seed_candidate_application(
+    vacancies_data: list[dict[str, Any]], context: Context
+) -> models.CandidateApplication:
     candidate_id = get_random_uuid()
     sex = "male" if random() < 0.5 else "female"
     first_name = fake.first_name_male() if sex == "male" else fake.first_name_female()
@@ -79,7 +82,9 @@ def seed_candidate_application(vacancies_data: list[dict[str, Any]], context: Co
     location = choice(context.locations)
 
     passport_code_is_old_format = random() < 0.4
-    passport_code = context.shared_unique_generators["passport_code"].get_unique(old_format=passport_code_is_old_format)
+    passport_code = context.shared_unique_generators["passport_code"].get_unique(
+        old_format=passport_code_is_old_format
+    )
     driver_license_code = context.shared_unique_generators[
         "driver_license_code"
     ].get_unique()
@@ -87,8 +92,7 @@ def seed_candidate_application(vacancies_data: list[dict[str, Any]], context: Co
     vacancy_data = choice(vacancies_data)
 
     vacancy: models.Vacancy | None = next(
-        filter(lambda v: v.name == vacancy_data["name"], context.vacancies),
-        None
+        filter(lambda v: v.name == vacancy_data["name"], context.vacancies), None
     )
 
     if vacancy is None:
@@ -111,7 +115,7 @@ def seed_candidate_application(vacancies_data: list[dict[str, Any]], context: Co
         company=vacancy.company,
         company_location=vacancy.company.company_location,
         employment_status=employment_status,
-        created_at=fake.date_time_between(start_date='-6m')
+        created_at=fake.date_time_between(start_date="-6m"),
     )
 
 
@@ -154,7 +158,7 @@ def seed_vacancy(vacancy_data: dict[str, Any], context: Context) -> models.Vacan
         salary=salary,
         additional_info=additional_info,
         company=company,
-        vacancy_category=vacancy_category
+        vacancy_category=vacancy_category,
     )
 
 
@@ -194,5 +198,5 @@ def seed_company(company_data: dict[str, Any], context: Context) -> models.Compa
         name=name,
         phone_number=phone_number,
         production_branch=production_branch,
-        company_location=location
+        company_location=location,
     )

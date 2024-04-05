@@ -3,10 +3,9 @@ from random import seed
 from faker import Faker
 from pypika import Query
 
+import tables
 from contexts.star import Context
 from seeds.star import seed_root
-import tables
-
 
 Faker.seed(123)
 seed(123)
@@ -29,7 +28,9 @@ statements = [
     .insert(*[(vc.vacancy_category_id, vc.name) for vc in ctx.vacancy_categories]),
     Query.into(tables.vacancy_table)
     .columns("vacancy_id", "name", "salary", "additional_info")
-    .insert(*[(v.vacancy_id, v.name, v.salary, v.additional_info) for v in ctx.vacancies]),
+    .insert(
+        *[(v.vacancy_id, v.name, v.salary, v.additional_info) for v in ctx.vacancies]
+    ),
     Query.into(tables.employment_status_table)
     .columns("employment_status_id", "name")
     .insert(*[(es.employment_status_id, es.name) for es in ctx.employment_statuses]),
@@ -50,7 +51,7 @@ statements = [
         "company_location_id",
         "production_branch_id",
         "employment_status_id",
-        "created_at"
+        "created_at",
     )
     .insert(
         *[
@@ -70,9 +71,9 @@ statements = [
                 ca.company_location_id,
                 ca.production_branch_id,
                 ca.employment_status_id,
-                ca.created_at
+                ca.created_at,
             )
             for ca in ctx.candidate_applications
         ]
-    )
+    ),
 ]

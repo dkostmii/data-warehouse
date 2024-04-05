@@ -44,7 +44,9 @@ class PhoneNumberGenerator:
         with open("datasets/phone_prefixes.csv") as f:
             lines = f.readlines()
             table_rows = lines[1:]
-            self._phone_prefixes = ["".join(row.strip().split(",")) for row in table_rows]
+            self._phone_prefixes = [
+                "".join(row.strip().split(",")) for row in table_rows
+            ]
 
     def get(self) -> str:
         phone_prefix = choice(self._phone_prefixes)
