@@ -64,7 +64,7 @@ statements = [
             Column("company_location_id", "UUID", nullable=False),
             Column("production_branch_id", "UUID", nullable=False),
             Column("employment_status_id", "UUID", nullable=False),
-            Column("created_at", "TIME", default=NOW())
+            Column("created_at", "TIMESTAMP", default=NOW())
         )
         .primary_key("candidate_application_id")
         .foreign_key(["candidate_location_id"], tables.location_table, ["location_id"])

@@ -10,12 +10,11 @@ try:
 except ImportError:
     from yaml import Loader
 
-import models
-from context import Context
+import models.star as models
+from contexts.star import Context
 from generators.id import get_random_uuid
 from generators.text import (
     EmailGenerator,
-    EmploymentStatusGenerator,
     PhoneNumberGenerator,
     get_driver_license_code,
     get_passport_code,
@@ -37,7 +36,16 @@ def seed_root(context: Context):
     context.shared_unique_generators["driver_license_code"] = UniqueGenerator(
         gen=SimpleNamespace(get=get_driver_license_code)
     )
-    context.shared_generators["employment_status"] = EmploymentStatusGenerator()
+
+    with open("datasets/employment_status.txt") as f:
+        employment_statuses: list[str] = f.readlines()
+        for es_name in employment_statuses:
+            context.employment_statuses.append(
+                models.EmploymentStatus(
+                    employment_status_id=get_random_uuid(),
+                    name=es_name.strip()
+                )
+            )
 
     with open("datasets/locations.txt") as f:
         location_id = get_random_uuid()
@@ -50,33 +58,18 @@ def seed_root(context: Context):
     with open("datasets/vacancies.yml") as f:
         vacancies_data = yaml.load(f.read(), Loader=Loader)
 
-    for vacancy_data in vacancies_data:
-        vacancy = seed_vacancy(vacancy_data=vacancy_data, context=context)
-        context.vacancies.append(vacancy)
-
-    while len(context.candidates) < CANDIDATE_COUNT:
-        candidate = seed_candidate(context)
-        context.candidates.append(candidate)
+    while len(context.candidate_applications) < CANDIDATE_COUNT:
+        candidate = seed_candidate_application(vacancies_data=vacancies_data, context=context)
+        context.candidate_applications.append(candidate)
 
 
-def seed_candidate(context: Context):
+def seed_candidate_application(vacancies_data: list[dict[str, Any]], context: Context) -> models.CandidateApplication:
     candidate_id = get_random_uuid()
     sex = "male" if random() < 0.5 else "female"
     first_name = fake.first_name_male() if sex == "male" else fake.first_name_female()
     last_name = fake.last_name_male() if sex == "male" else fake.last_name_female()
 
-    phone_number_value = context.shared_unique_generators["phone_number"].get_unique()
-    phone_number: models.PhoneNumber | None = next(
-        filter(lambda pn: pn.phone_number == phone_number_value, context.phone_numbers),
-        None,
-    )
-
-    if phone_number is None:
-        phone_number_id = get_random_uuid()
-        phone_number = models.PhoneNumber(
-            phone_number_id=phone_number_id, phone_number=phone_number_value
-        )
-        context.phone_numbers.append(phone_number)
+    phone_number = context.shared_unique_generators["phone_number"].get_unique()
 
     email = context.shared_unique_generators["email"].get_unique(
         first_name=first_name, last_name=last_name
@@ -91,22 +84,36 @@ def seed_candidate(context: Context):
         "driver_license_code"
     ].get_unique()
 
-    vacancy = choice(context.vacancies)
+    vacancy_data = choice(vacancies_data)
 
-    employment_status = context.shared_generators["employment_status"].get()
+    vacancy: models.Vacancy | None = next(
+        filter(lambda v: v.name == vacancy_data["name"], context.vacancies),
+        None
+    )
 
-    return models.Candidate(
-        candidate_id=candidate_id,
+    if vacancy is None:
+        vacancy = seed_vacancy(vacancy_data=vacancy_data, context=context)
+        context.vacancies.append(vacancy)
+
+    employment_status = choice(context.employment_statuses)
+
+    return models.CandidateApplication(
+        candidate_application_id=candidate_id,
         first_name=first_name,
         last_name=last_name,
         phone_number=phone_number,
         email=email,
         birth_date=birth_date,
-        location=location,
         passport_code=passport_code,
         driver_license_code=driver_license_code,
+        candidate_location=location,
         vacancy=vacancy,
+        vacancy_category=vacancy.vacancy_category,
+        company=vacancy.company,
+        company_location=vacancy.company.company_location,
+        production_branch=vacancy.company.production_branch,
         employment_status=employment_status,
+        created_at=fake.date_time_between(start_date='-6m')
     )
 
 
@@ -114,8 +121,14 @@ def seed_vacancy(vacancy_data: dict[str, Any], context: Context) -> models.Vacan
     vacancy_id = get_random_uuid()
     name = vacancy_data["name"]
 
-    company = seed_company(vacancy_data["company"], context=context)
-    context.companies.append(company)
+    company: models.Company | None = next(
+        filter(lambda c: c.name == vacancy_data["company"]["name"], context.companies),
+        None,
+    )
+
+    if company is None:
+        company = seed_company(company_data=vacancy_data["company"], context=context)
+        context.companies.append(company)
 
     salary = randint(8_500, 120_000)
 
@@ -140,10 +153,10 @@ def seed_vacancy(vacancy_data: dict[str, Any], context: Context) -> models.Vacan
     return models.Vacancy(
         vacancy_id=vacancy_id,
         name=name,
-        company=company,
         salary=salary,
-        vacancy_category=vacancy_category,
         additional_info=additional_info,
+        company=company,
+        vacancy_category=vacancy_category
     )
 
 
@@ -151,18 +164,7 @@ def seed_company(company_data: dict[str, Any], context: Context) -> models.Compa
     company_id = get_random_uuid()
     name = company_data["name"]
 
-    phone_number_value = context.shared_unique_generators["phone_number"].get_unique()
-    phone_number: models.PhoneNumber | None = next(
-        filter(lambda pn: pn.phone_number == phone_number_value, context.phone_numbers),
-        None,
-    )
-
-    if phone_number is None:
-        phone_number_id = get_random_uuid()
-        phone_number = models.PhoneNumber(
-            phone_number_id=phone_number_id, phone_number=phone_number_value
-        )
-        context.phone_numbers.append(phone_number)
+    phone_number = context.shared_unique_generators["phone_number"].get_unique()
 
     location_name = company_data["location"]
     location: models.Location | None = next(
@@ -193,6 +195,6 @@ def seed_company(company_data: dict[str, Any], context: Context) -> models.Compa
         company_id=company_id,
         name=name,
         phone_number=phone_number,
-        location=location,
         production_branch=production_branch,
+        company_location=location
     )

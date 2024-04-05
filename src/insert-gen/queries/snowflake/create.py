@@ -66,7 +66,7 @@ statements = [
             Column("company_id", "UUID", nullable=False),
             Column("company_location_id", "UUID", nullable=False),
             Column("employment_status_id", "UUID", nullable=False),
-            Column("created_at", "TIME", default=NOW())
+            Column("created_at", "TIMESTAMP", default=NOW())
         )
         .primary_key("candidate_application_id")
         .foreign_key(["candidate_location_id"], tables.location_table, ["location_id"])
@@ -75,5 +75,3 @@ statements = [
         .foreign_key(["company_location_id"], tables.location_table, ["location_id"])
         .foreign_key(["employment_status_id"], tables.employment_status_table, ["employment_status_id"])
 ]
-
-statements = list(map(lambda stmt: str(stmt) + ";", statements))

@@ -11,25 +11,6 @@ class Location:
 
 
 @dataclass
-class VacancyCategory:
-    vacancy_category_id: UUID
-    name: str
-
-
-@dataclass
-class Vacancy:
-    vacancy_id: UUID
-    name: str
-    salary: int
-    additional_info: str = ""
-    vacancy_category: VacancyCategory
-
-    @property
-    def vacancy_category_id(self):
-        return self.vacancy_category.vacancy_category_id
-
-
-@dataclass
 class ProductionBranch:
     production_branch_id: UUID
     name: str
@@ -41,10 +22,32 @@ class Company:
     name: str
     phone_number: str
     production_branch: ProductionBranch
+    company_location: Location
 
     @property
     def production_branch_id(self):
         return self.production_branch.production_branch_id
+
+
+@dataclass
+class VacancyCategory:
+    vacancy_category_id: UUID
+    name: str
+
+
+@dataclass
+class Vacancy:
+    vacancy_id: UUID
+    name: str
+    salary: int
+    vacancy_category: VacancyCategory
+    company: Company
+    additional_info: str = ""
+
+    @property
+    def vacancy_category_id(self):
+        return self.vacancy_category.vacancy_category_id
+
 
 @dataclass
 class EmploymentStatus:

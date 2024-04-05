@@ -29,7 +29,7 @@ class EmailGenerator:
         last_name = translitua(last_name.lower())
         separator = choice([".", "_", "__"])
         appendix = ""
-        email_provider = choice(self._email_providers)
+        email_provider = choice(self._email_providers).strip()
 
         if random() < 0.5:
             appendix = str(randint(0, 99)).zfill(2)
@@ -44,7 +44,7 @@ class PhoneNumberGenerator:
         with open("datasets/phone_prefixes.csv") as f:
             lines = f.readlines()
             table_rows = lines[1:]
-            self._phone_prefixes = ["".join(row.split()) for row in table_rows]
+            self._phone_prefixes = ["".join(row.strip().split(",")) for row in table_rows]
 
     def get(self) -> str:
         phone_prefix = choice(self._phone_prefixes)
@@ -61,7 +61,7 @@ class LocationGenerator:
             self._locations = f.readlines()
 
     def get(self) -> str:
-        return choice(self._locations)
+        return choice(self._locations).strip()
 
 
 class EmploymentStatusGenerator:
@@ -72,7 +72,7 @@ class EmploymentStatusGenerator:
             self._employment_statuses = f.readlines()
 
     def get(self) -> str:
-        return choice(self._employment_statuses)
+        return choice(self._employment_statuses).strip()
 
 
 def get_passport_code(old_format: bool = False) -> str:

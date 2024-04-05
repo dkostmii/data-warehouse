@@ -10,11 +10,18 @@ class Location:
 
 
 @dataclass
-class Vacancy:
-    vacancy_id: UUID
+class ProductionBranch:
+    production_branch_id: UUID
     name: str
-    salary: int
-    additional_info: str = ""
+
+
+@dataclass
+class Company:
+    company_id: UUID
+    name: str
+    phone_number: str
+    production_branch: ProductionBranch
+    company_location: Location
 
 
 @dataclass
@@ -24,16 +31,13 @@ class VacancyCategory:
 
 
 @dataclass
-class Company:
-    company_id: UUID
+class Vacancy:
+    vacancy_id: UUID
     name: str
-    phone_number: str
-
-
-@dataclass
-class ProductionBranch:
-    production_branch_id: UUID
-    name: str
+    salary: int
+    vacancy_category: VacancyCategory
+    company: Company
+    additional_info: str = ""
 
 
 @dataclass
