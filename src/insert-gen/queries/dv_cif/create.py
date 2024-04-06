@@ -1,5 +1,4 @@
 from pypika import Column, CustomFunction, Query
-from pypika.functions import Now as NOW
 
 import tables.dv_cif as tables
 from helpers.create_query import MultipleFKCreateQueryBuilder

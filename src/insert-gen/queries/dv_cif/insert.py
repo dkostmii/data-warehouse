@@ -16,10 +16,12 @@ seed_root(context=ctx)
 statements = [
     Query.into(tables.hub_candidate_table)
     .columns("candidate_id")
-    .insert(*[(c.candidate_id, ) for c in ctx.hub_candidates]),
+    .insert(*[(c.candidate_id,) for c in ctx.hub_candidates]),
     Query.into(tables.sat_candidate_info_table)
     .columns("candidate_id", "employment_status")
-    .insert(*[(ci.candidate_id, ci.employment_status) for ci in ctx.sat_candidate_infos]),
+    .insert(
+        *[(ci.candidate_id, ci.employment_status) for ci in ctx.sat_candidate_infos]
+    ),
     Query.into(tables.sat_candidate_contacts_table)
     .columns(
         "candidate_id",
@@ -50,7 +52,7 @@ statements = [
     ),
     Query.into(tables.hub_company_table)
     .columns("company_id")
-    .insert(*[(c.company_id, ) for c in ctx.hub_companies]),
+    .insert(*[(c.company_id,) for c in ctx.hub_companies]),
     Query.into(tables.sat_company_info_table)
     .columns("company_id", "name", "phone_number", "location")
     .insert(

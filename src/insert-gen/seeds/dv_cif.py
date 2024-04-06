@@ -104,18 +104,22 @@ def seed_vacancy(vacancy_data: dict[str, Any], context: Context) -> models.LinkV
 
     company_info: models.SatCompanyInfo | None = next(
         filter(
-            lambda ci: ci.name == vacancy_data["company"]["name"], context.sat_company_infos
+            lambda ci: ci.name == vacancy_data["company"]["name"],
+            context.sat_company_infos,
         ),
         None,
     )
 
-    company: models.HubCompany | None = next(
-        filter(
-            lambda c: c.company_id == company_info.company_id,
-            context.hub_companies
-        ),
-        None
-    ) if company_info is not None else None
+    company: models.HubCompany | None = (
+        next(
+            filter(
+                lambda c: c.company_id == company_info.company_id, context.hub_companies
+            ),
+            None,
+        )
+        if company_info is not None
+        else None
+    )
 
     if company is None:
         company = seed_company(vacancy_data["company"], context=context)
@@ -138,8 +142,7 @@ def seed_vacancy(vacancy_data: dict[str, Any], context: Context) -> models.LinkV
     )
 
     sat_vacancy_category = models.SatVacancyCategory(
-        vacancy_id=vacancy_id,
-        name=vacancy_category
+        vacancy_id=vacancy_id, name=vacancy_category
     )
 
     context.sat_vacancy_infos.append(vacancy_info)

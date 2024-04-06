@@ -16,7 +16,7 @@ seed_root(context=ctx)
 statements = [
     Query.into(tables.hub_candidate_application_table)
     .columns("candidate_application_id")
-    .insert(*[(ca.candidate_application_id, ) for ca in ctx.hub_candidate_applications]),
+    .insert(*[(ca.candidate_application_id,) for ca in ctx.hub_candidate_applications]),
     Query.into(tables.sat_candidate_application_info_table)
     .columns(
         "candidate_application_id",

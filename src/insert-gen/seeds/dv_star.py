@@ -74,7 +74,11 @@ def seed_candidate_application(
     ].get_unique()
 
     vacancy_data = choice(vacancies_data)
-    vacancy = seed_vacancy(candidate_application_id=candidate_application_id, vacancy_data=vacancy_data, context=context)
+    vacancy = seed_vacancy(
+        candidate_application_id=candidate_application_id,
+        vacancy_data=vacancy_data,
+        context=context,
+    )
     context.sat_vacancies.append(vacancy)
 
     employment_status = context.shared_generators["employment_status"].get()
@@ -103,7 +107,6 @@ def seed_candidate_application(
 def seed_vacancy(
     candidate_application_id: UUID, vacancy_data: dict[str, Any], context: Context
 ) -> models.SatVacancy:
-    vacancy_id = get_random_uuid()
     name = vacancy_data["name"]
 
     company = seed_company(
@@ -129,7 +132,10 @@ def seed_vacancy(
     context.sat_vacancy_categories.append(vacancy_category)
 
     return models.SatVacancy(
-        candidate_application_id=candidate_application_id, name=name, salary=salary, additional_info=additional_info
+        candidate_application_id=candidate_application_id,
+        name=name,
+        salary=salary,
+        additional_info=additional_info,
     )
 
 
