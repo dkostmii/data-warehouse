@@ -1,0 +1,143 @@
+@startuml erd_star_dv_ua
+
+skinparam linetype ortho
+
+entity Заявка_кандидата <<Hub>> {
+  Код_заявки_кандидата
+  ..
+  Дата_завантаження
+  Запис_про_джерело
+}
+
+entity Заявка_кандидата_інформація <<Satelite>> {
+  Код_заявки_кандидата
+  Ім'я
+  Прізвище
+  Номер_телефону
+  Електронна_пошта
+  Дата_народження
+  Номер_паспорта
+  Номер_водійського_посвідчення
+  Місцезнаходження_кандидата
+  Статус_працевлаштування
+  Дата_створення_заявки
+  ..
+  Дата_заватаження
+  Запис_про_поч_систему
+}
+
+entity Вакансія <<Satelite>> {
+  Код_заявки_кандидата
+  Назва
+  Заробітня_плата
+  Додаткова_інформація
+  ..
+  Дата_заватаження
+  Запис_про_поч_систему
+}
+
+entity Категорія_вакансії <<Satelite>> {
+  Код_заявки_кандидата
+  Назва
+  ..
+  Дата_заватаження
+  Запис_про_поч_систему
+}
+
+entity Компанія <<Satelite>> {
+  Код_заявки_кандидата
+  Назва
+  Номер_телефону
+  Місцезнаходження_компанії
+  ..
+  Дата_заватаження
+  Запис_про_поч_систему
+}
+
+entity Виробнича_галузь <<Satelite>> {
+  Код_заявки_кандидата
+  Назва
+  ..
+  Дата_заватаження
+  Запис_про_поч_систему
+}
+
+Заявка_кандидата ||--o{ Заявка_кандидата_інформація
+Заявка_кандидата ||--o{ Вакансія
+Заявка_кандидата ||--o{ Категорія_вакансії
+Заявка_кандидата ||--o{ Компанія
+Заявка_кандидата ||--o{ Виробнича_галузь
+
+@enduml
+
+@startuml erd_star_dv_en
+
+skinparam linetype ortho
+
+entity Hub_Candidate_application <<Hub>> {
+  candidate_application_id
+  ..
+  load_date
+  record_source
+}
+
+entity Sat_Candidate_application_info <<Satelite>> {
+  candidate_application_id
+  first_name
+  last_name
+  phone_number
+  email
+  birth_date
+  passport_code
+  driver_license_code
+  candidate_location
+  employment_status
+  created_at
+  ..
+  load_date
+  record_source
+}
+
+entity Sat_Vacancy <<Satelite>> {
+  candidate_application_id
+  name
+  salary
+  additional_info
+  ..
+  load_date
+  record_source
+}
+
+entity Sat_Vacancy_category <<Satelite>> {
+  candidate_application_id
+  name
+  ..
+  load_date
+  record_source
+}
+
+entity Sat_Company <<Satelite>> {
+  candidate_application_id
+  name
+  phone_number
+  company_location
+  ..
+  load_date
+  record_source
+}
+
+entity Sat_Production_branch <<Satelite>> {
+  candidate_application_id
+  name
+  ..
+  load_date
+  record_source
+}
+
+Hub_Candidate_application ||--o{ Sat_Candidate_application_info
+Hub_Candidate_application ||--o{ Sat_Vacancy
+Hub_Candidate_application ||--o{ Sat_Vacancy_category
+Hub_Candidate_application ||--o{ Sat_Company
+Hub_Candidate_application ||--o{ Sat_Production_branch
+
+@enduml
