@@ -1,6 +1,6 @@
 DIAGRAM_THEME := plain
 DIAGRAM_FONT := "Times New Roman"
-DIAGRAM_DPI := 300
+DIAGRAM_DPI := 150
 
 all: diagrams
 
