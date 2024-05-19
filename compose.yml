@@ -20,6 +20,7 @@ services:
       - ./src/model/02-seed-db.sh:/docker-entrypoint-initdb.d/03-model-seed-db.sh
       - ./src/model/metadata:/etc/model/metadata
       - ./src/insert-gen/generated:/etc/insert-gen
+      - ./src/model/data-exchange:/etc/model/data-exchange
       - ./.psqlrc:/etc/psqlrc
 
     environment:
