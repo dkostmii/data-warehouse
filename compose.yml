@@ -21,6 +21,7 @@ services:
       - ./src/model/metadata:/etc/model/metadata
       - ./src/insert-gen/generated:/etc/insert-gen
       - ./src/model/data-exchange:/etc/model/data-exchange
+      - ./src/model/analytic:/etc/model/analytic
       - ./.psqlrc:/etc/psqlrc
 
     environment:
